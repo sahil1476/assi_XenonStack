@@ -11,3 +11,16 @@ Solution : link for the script code : [https://github.com/sahil1476/assi_XenonSt
  link for the sample pictures of the output of the given commands : 
                              [https://github.com/sahil1476/assi_XenonStack/tree/main/linux_task_1/screen_shot]
                              
+
+## Second assignment To make a demo web-site
+
+deployment link : [https://xenonassignment.vercel.app/index.html]
+
+gitHub repo link : [https://github.com/sahil1476/assi_XenonStack/tree/main/xenonStack_web_assig]
+
+
+
+
+
+
+####### MADE By : SAHIL SHARMA
