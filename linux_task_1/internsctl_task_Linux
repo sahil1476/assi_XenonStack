@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# THE file name for this scriop is 'internsctl'
+
 VERSION="v0.1.0"
 
 display_manual() {
