@@ -1,0 +1,221 @@
+#!/bin/bash
+
+VERSION="v0.1.0"
+
+display_manual() {
+ echo "internsctl(1) - Custome command"
+ echo ""
+ echo "NAME"
+ echo "    internsctl "
+ echo ""
+ echo "SYNOPSIS"
+ echo "Command OPTION []"
+ echo ""
+ echo "DESCRIPTION"
+ echo "      internsctl is a custom linux command that perform operation as "
+ echo ""
+ echo "OPTION"
+ echo "        --help     display help information"
+ echo "        --version  display version of the command"
+ echo ""
+ echo "SYNTAX"
+ echo ""
+ echo " internsctl --help"
+ echo " internsctl --version"
+ echo ""
+ echo "COMMANDS"
+ echo " cpu     get cpu information"
+ echo " menory  get menory information"
+ echo " user    manage user  accounts."
+ echo " "
+ echo " ------ EXAMPLES --------"
+ echo " internsctl cpu getinfo"
+echo " internsctl memory getinfo"
+echo " internsctl user create <username>"
+echo " internsctl user list "
+echo " internsctl user list --sudo-only"
+echo ""
+echo " internsctl file getinfo hello.txt"
+echo " internsctl file getinfo --size hello.txt"
+echo " internsctl file getinfo -p hello.txt"
+echo " internsctl file getinfo -m hello.txt"
+echo " internsctl file getinfo -o hello.txt"
+echo ""
+}
+
+#function
+display_help() {
+echo " Usage : internsctl [option]"
+echo ""
+echo "OPTION"
+echo "          --help        help and information"
+echo "          --version     version of internsctl"
+echo ""
+echo " how to use ..............."
+echo ""
+echo "  internsctl --help"
+echo "  internsctl --version"
+echo ""
+echo "  internsctl cpu getinfo"
+echo "  internsctl memory getinfo"
+echo "  internsctl user create <username>"
+echo "  internsctl user list --sudo-only"
+echo ""
+echo ""
+echo " internsctl file getinfo hello.txt"
+echo " internsctl file getinfo --size hello.txt"
+echo " internsctl file getinfo -p hello.txt"
+echo " internsctl file getinfo -m hello.txt"
+echo " internsctl file getinfo -o hello.txt"
+echo ""
+
+
+}
+
+get_file_info() {
+ if [ -z "$1" ]; then
+     echo "Error: missing file name . Usage: internsctl file getinfo [options] <file-name>"
+     exit 1
+ fi
+
+ FILENAME="$1"
+ SIZE_OPTION=false
+ PERMISSIONS_OPTION=false
+ OWNER_OPTION=false
+ LAST_MODIFIED_OPTION=false
+
+
+while [[ $# -gt 0 ]]; do
+     case $1 in
+        --size | -s)
+             SIZE_OPTION=true
+             ;;
+        --permissions | -p)
+             PERMISSIONS_OPTION=true
+             ;;
+        --owner | -o)
+             OWNER_OPTION=true
+             ;;
+        --last-modified | -m)
+             LAST_MODIFIED_OPTION=true
+             ;;
+        *)
+             FILENAME="$1"
+             ;;
+      esac
+      shift
+done
+
+# file exist or not
+if [ ! -e "$FILENAME" ]; then
+    echo "Error: File not Found: $FILENAME"
+    exit 1
+fi
+
+# display info
+echo  "$FILENAME"
+if [ "$PERMISSIONS_OPTION" = true ]; then
+    echo "Permissions: $(stat -c %A "$FILENAME")"
+fi
+if [ "$SIZE_OPTION" = true ]; then
+    echo "SIZE(B): $(stat -c %s "$FILENAME")"
+fi
+if [ "$OWNER_OPTION" = true ]; then
+    echo "OWNER: $(stat -c %U "$FILENAME")"
+fi
+if [ "$LAST_MODIFIED_OPTION" = true ]; then
+    echo "Last Modified: $(stat -c %y "$FILENAME")"
+fi
+
+}
+
+get_cpu_info() {
+     lscpu
+}
+
+get_memory_info() {
+     free
+}
+
+# create user
+create_user() {
+if [ -z "$1" ]; then
+    echo "Error: Missing username. Usage: internsctl user create <username>"
+    exit 1
+fi
+
+sudo useradd -m -s /bin/bash "$1"
+sudo passwd "$1"
+
+}
+
+# fun to list all regular user
+list_users() {
+  cut -d: -f1 /etc/passwd
+}
+
+# list user withsudo permission
+list_sudo_users() {
+  grep -Po '^sudo.+:\K.*$' /etc/group | tr ',' '\n'
+}
+
+
+# loop for executing the above function.............
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --help)
+            display_help
+            exit 0
+            ;;
+        --version)
+            echo "internsctl $VERSION"
+            exit 0
+            ;;
+        file)
+            shift
+            get_file_info "$@"
+            exit 0
+            ;;
+        cpu)
+            get_cpu_info
+            exit 0
+            ;;
+        memory)
+            get_memory_info
+            exit 0
+            ;;
+        user)
+            shift 
+            case $1 in 
+                create)
+                     shift
+                     create_user "$1"
+                     exit 0
+                     ;;
+                 list)
+                     shift
+                     if [ "$1" == "--sudo-only" ]; then
+                         list_sudo_users
+                     else
+                         list_users
+                     fi
+                     exit 0
+                     ;;
+                 *)
+                   echo "invalid user command : $1"
+                   display_help
+                   exit 1
+                   ;;
+             esac
+             ;;
+
+        *)
+           echo "Invalid option: $1"
+           display_help
+           exit 1
+           ;;
+    esac
+    shift
+done
+
