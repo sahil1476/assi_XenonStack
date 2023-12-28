@@ -19,6 +19,7 @@ Solution : link for the script code : [https://github.com/sahil1476/assi_XenonSt
                     - internsctl file getinfo -p hello.txt
                     - internsctl file getinfo -m hello.txt
                     - internsctl file getinfo -o hello.txt
+                    - Point 1
 
  link for the sample pictures of the output of the given commands : 
                              [https://github.com/sahil1476/assi_XenonStack/tree/main/linux_task_1/screen_shot]
