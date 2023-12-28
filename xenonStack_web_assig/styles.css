@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-weight: bold;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+
+/* Add the following styles to your existing styles.css */
+
+main {
+    padding: 20px;
+}
+
+section h2 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table img {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    /* Adjust as needed */
+    display: block;
+    margin: 0 auto;
+}
+
+table p {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+
+/* Add the following styles to your existing styles.css */
+
+main section {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-top: 10px;
+}
+
+input,
+textarea,
+button {
+    margin-top: 5px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
